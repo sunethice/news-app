@@ -5,6 +5,7 @@ import ReactDOM from "react-dom";
 // import { PersistGate } from "redux-persist/lib/integration/react";
 // import { configureStore } from "./store";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import "../css/app.css";
 
 //components
 import Search from "./components/Search";
