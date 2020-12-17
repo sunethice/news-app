@@ -71795,27 +71795,29 @@ var Search = /*#__PURE__*/function (_Component) {
     value: function searchStr() {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/search/", {
-        params: {
-          searchStr: this.state.query,
-          page: this.state.pageRequest
-        }
-      }).then(function (resp) {
-        // console.log(resp);
-        _this2.setState({
-          resultList: resp.data.resultList,
-          currentPage: resp.data.currentPage
+      if (this.state.query !== "") {
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/search/", {
+          params: {
+            searchStr: this.state.query,
+            page: this.state.pageRequest
+          }
+        }).then(function (resp) {
+          // console.log(resp);
+          _this2.setState({
+            resultList: resp.data.resultList,
+            currentPage: resp.data.currentPage
+          });
+        })["catch"](function (error) {
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log("Error", error.message);
+          }
         });
-      })["catch"](function (error) {
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log("Error", error.message);
-        }
-      });
+      }
     }
   }, {
     key: "renderNews",

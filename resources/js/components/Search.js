@@ -22,30 +22,32 @@ class Search extends Component {
     }
 
     searchStr() {
-        axios
-            .get("/api/search/", {
-                params: {
-                    searchStr: this.state.query,
-                    page: this.state.pageRequest
-                }
-            })
-            .then(resp => {
-                // console.log(resp);
-                this.setState({
-                    resultList: resp.data.resultList,
-                    currentPage: resp.data.currentPage
+        if (this.state.query !== "") {
+            axios
+                .get("/api/search/", {
+                    params: {
+                        searchStr: this.state.query,
+                        page: this.state.pageRequest
+                    }
+                })
+                .then(resp => {
+                    // console.log(resp);
+                    this.setState({
+                        resultList: resp.data.resultList,
+                        currentPage: resp.data.currentPage
+                    });
+                })
+                .catch(function(error) {
+                    if (error.response) {
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                    } else if (error.request) {
+                        console.log(error.request);
+                    } else {
+                        console.log("Error", error.message);
+                    }
                 });
-            })
-            .catch(function(error) {
-                if (error.response) {
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log("Error", error.message);
-                }
-            });
+        }
     }
 
     renderNews() {
