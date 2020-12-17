@@ -71655,6 +71655,15 @@ var PinnedNews = /*#__PURE__*/function (_Component) {
                   _this2.setState({
                     pinnedItems: resp.data
                   });
+                })["catch"](function (error) {
+                  if (error.response) {
+                    alert(error.message);
+                    console.log(error.response.status);
+                  } else if (error.request) {
+                    console.log(error.request);
+                  } else {
+                    console.log("Error", error.message);
+                  }
                 });
 
               case 2:

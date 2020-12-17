@@ -7,10 +7,22 @@ import PinnedItem from "./PinnedItem";
 
 class PinnedNews extends Component {
     async componentDidMount() {
-        await axios.get("api/list_pinned").then(resp => {
-            console.log(resp);
-            this.setState({ pinnedItems: resp.data });
-        });
+        await axios
+            .get("api/list_pinned")
+            .then(resp => {
+                console.log(resp);
+                this.setState({ pinnedItems: resp.data });
+            })
+            .catch(function(error) {
+                if (error.response) {
+                    alert(error.message);
+                    console.log(error.response.status);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log("Error", error.message);
+                }
+            });
     }
 
     constructor(props) {
