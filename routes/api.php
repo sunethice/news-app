@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('search', [NewsController::class, 'cpIndex']);
 Route::get('search/{id}', [NewsController::class, 'cpGetNewsItem']);
+Route::post('save', [NewsController::class, 'cpSaveNewsItem']);
+Route::get('list_pinned', [NewsController::class, 'cpListPinnedItem']);
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

@@ -8,10 +8,11 @@ body {
 }
 
 .app {
-    width: 45em;
-    display: grid;
+    /* width: 45em; */
+    /* display: grid; */
+    max-width: 700px;
     gap: 1em;
-    margin: 3em;
+    margin: 1em;
 }
 
 form {
@@ -46,9 +47,12 @@ input:focus {
     outline: auto #17f;
 }
 
+.sectionWrap {
+    list-style-type: none;
+}
+
 .item {
     padding: 1em;
-    list-style-type: none;
     border-radius: 6px;
     margin-bottom: 1em;
     background: #fff;
@@ -83,4 +87,9 @@ input:focus {
 
 .item .meta > *:not(:last-child) {
     margin-right: 2em;
+}
+
+.pinnedWrap {
+    border: 1px solid #ebebeb;
+    min-height: 300px;
 }

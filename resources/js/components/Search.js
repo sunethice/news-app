@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import axio from "axios";
+import axios from "axios";
 import { debounce, isEmpty } from "lodash";
 
 //components
 import NewsItem from "./NewsItem";
+import PinnedNews from "./PinnedNews";
 
 class Search extends Component {
     componentDidMount() {
@@ -15,21 +16,36 @@ class Search extends Component {
         this.state = {
             query: "",
             resultList: {},
-            currentPage: 1
+            currentPage: 1,
+            pageRequest: 1
         };
     }
 
     searchStr() {
-        axio.get("/api/search/", {
-            params: {
-                searchStr: this.state.query
-            }
-        }).then(resp => {
-            this.setState({
-                resultList: resp.data.resultList,
-                currentPage: resp.data.currentPage
+        axios
+            .get("/api/search/", {
+                params: {
+                    searchStr: this.state.query,
+                    page: this.state.pageRequest
+                }
+            })
+            .then(resp => {
+                // console.log(resp);
+                this.setState({
+                    resultList: resp.data.resultList,
+                    currentPage: resp.data.currentPage
+                });
+            })
+            .catch(function(error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log("Error", error.message);
+                }
             });
-        });
     }
 
     renderNews() {
@@ -47,31 +63,37 @@ class Search extends Component {
     render() {
         const { query, resultList } = this.state;
         return (
-            <>
-                <div className="app">
-                    <form>
-                        <input
-                            autoFocus
-                            value={query}
-                            onKeyUp={e => {
-                                this.searchStr();
-                            }}
-                            onChange={e => {
-                                this.setState({ query: e.target.value });
-                            }}
-                        />
-                        <button>Search</button>
-                    </form>
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-8 app">
+                        <form>
+                            <input
+                                autoFocus
+                                value={query}
+                                onKeyUp={e => {
+                                    this.searchStr();
+                                }}
+                                onChange={e => {
+                                    this.setState({ query: e.target.value });
+                                }}
+                            />
+                            <button>Search</button>
+                        </form>
 
-                    {isEmpty(resultList) ? (
-                        <p>
-                            <i>No results</i>
-                        </p>
-                    ) : (
-                        this.renderNews()
-                    )}
+                        {isEmpty(resultList) ? (
+                            <p>
+                                <i>No results</i>
+                            </p>
+                        ) : (
+                            this.renderNews()
+                        )}
+                    </div>
+                    <div className="col-md-4">
+                        <h1>Pinned Items</h1>
+                        <PinnedNews></PinnedNews>
+                    </div>
                 </div>
-            </>
+            </div>
         );
     }
 }

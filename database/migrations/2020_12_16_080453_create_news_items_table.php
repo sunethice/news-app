@@ -18,7 +18,8 @@ class CreateNewsItemsTable extends Migration
             $table->string('title')->comment('The Title');
             $table->string('link')->comment('A link to the article');
             $table->string('section')->comment('category');
-            $table->string('publication_dt')->comment('The publication date');
+            $table->string('publicationDt')->comment('The publication date');
+            $table->unsignedInteger('userId')->nullable();
             $table->timestamps();
         });
     }
